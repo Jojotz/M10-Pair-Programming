@@ -19,7 +19,8 @@ public class DecorationController {
 		List<FlowerShop> flowershoprepository = FlowerShopRepository.getAllFlowerShops();
 		
 		//Chequear si s'ha creat alguna floristeria previament.
-		if (flowershoprepository.isEmpty()) JOptionPane.showMessageDialog(null, "No hi cap floristeria creada !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
+		if (flowershoprepository.isEmpty()) 
+			JOptionPane.showMessageDialog(null, "No hi cap floristeria creada !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
 			
 		else {
 				
@@ -30,31 +31,55 @@ public class DecorationController {
 				JOptionPane.showMessageDialog(null, "Floristeria inexistent !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
 			else {
 						
-				String material="";
-				double price = 0;
-						
-				do {
-					material = JOptionPane.showInputDialog(null,"Introdueix el material de la decoració:","ENTRADA",JOptionPane.QUESTION_MESSAGE);
-					price = Double.parseDouble(JOptionPane.showInputDialog(null,"Introdueix el preu de la decoració:","ENTRADA",JOptionPane.QUESTION_MESSAGE));
-				
-				}while(material.isBlank() || material.isEmpty()); //Chequear que s'introdueixi algun caràcter
-					
-				for (FlowerShop l : flowershoprepository) {
-					if (l.getName().equals(flowershopname)){
-						Decoration decoration = new Decoration (material,price);
-						
-						if (l.getDecoration() == null) {  //Si floristeria no té cap decoració
-							ArrayList<Decoration> decoList = new ArrayList<Decoration>();
-							decoList.add(decoration);
-							l.setDecoration(decoList);
-						}
-						else {
-							l.getDecoration().add(decoration);
-						}
-						break;
-					}					
-				}
+
+				String material = inputMaterial();
+				double price = flowershopcontroller.inputPreu();
+				saveDecoration(material,price,flowershopname,flowershoprepository);
 			}				
 		}			
+	}
+
+	//M�tode per guardar la decoriacio a la llista
+	private void saveDecoration(String material, double price, String flowershopname,List<FlowerShop> flowershoprepository) {
+		for (FlowerShop l : flowershoprepository) {
+			if (l.getName().equals(flowershopname)){
+				Decoration decoration = new Decoration (material,price);
+				
+				if (l.getDecoration() == null) {  //Si floristeria no té cap decoració
+					ArrayList<Decoration> decoList = new ArrayList<Decoration>();
+					decoList.add(decoration);
+					l.setDecoration(decoList);
+				}
+				else {
+					l.getDecoration().add(decoration);
+				}
+				break;
+			}					
+		}
+		
+	}
+
+	//Metode per controlar l'entrada del material
+	private String inputMaterial() {
+		String material="";
+		Integer inputmaterial=2;
+		do {
+			try{
+				inputmaterial = Integer.parseInt(JOptionPane.showInputDialog(null,"Introdueix el material de la decoració (Fusta (0) � Plastic(1)):","ENTRADA",JOptionPane.QUESTION_MESSAGE).trim());
+				System.out.println(inputmaterial+"juan");
+				if (inputmaterial == 0)  				System.out.println("cabron");
+
+				
+				if ((inputmaterial != 0 ) && (inputmaterial != 1 )) 
+					JOptionPane.showMessageDialog(null, "El material nomes pot ser Fusta (0) o Plastic(1) !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
+			}catch(Exception e){
+				JOptionPane.showMessageDialog(null, "Error El material nomes pot ser Fusta (0) � Plastic(1) !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
+			}
+		}while ((inputmaterial != 0) && (inputmaterial != 1));
+		if (inputmaterial == 0) material = "FUSTA";
+		else material = "PLASTIC";
+		return material;
 	}		
+	
+		
 }

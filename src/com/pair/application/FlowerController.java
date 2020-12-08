@@ -30,38 +30,54 @@ public class FlowerController {
 			if (!flowershopcontroller.checkFlowerShopName(flowershopname)) 
 				JOptionPane.showMessageDialog(null, "Floristeria inexistent !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
 			else {
-					
-				String colour="";
-				double price = 0;
-					
-				do {
-				colour = JOptionPane.showInputDialog(null,"Introdueix el color de la flor:","ENTRADA",JOptionPane.QUESTION_MESSAGE);
-				price = Double.parseDouble(JOptionPane.showInputDialog(null,"Introdueix el preu de la flor:","ENTRADA",JOptionPane.QUESTION_MESSAGE));
-				if (colour != null)  flowershopname=flowershopname.trim().toUpperCase();
-				else {
-					flowershopname="";
-					break;
-				}				
-				}while(colour.isBlank() || colour.isEmpty()); //Chequear que s'introdueixi algun car√†cter
+								
+				String colour = inputColour();
+				double price = flowershopcontroller.inputPreu();
+				saveFlower(colour, price, flowershopname,flowershoprepository);
 				
-				for (FlowerShop l : flowershoprepository) {
-					if (l.getName().equals(flowershopname)){
-						Flower flower = new Flower (colour,price);
-						
-						if (l.getFlowers()== null) {
-							ArrayList<Flower> flowers = new ArrayList<Flower>();
-							flowers.add(flower);
-							l.setFlowers(flowers);
-						}
-						else {
-							l.getFlowers().add(flower);
-						}
-						break;
-					}
-					
+			}//end 2on if-else				
+		}//end 1er 			
+	}
+	
+	
+	//Metode per guardar l'arbre al repositori
+	private void saveFlower(String colour, double price,String flowershopname,List<FlowerShop> flowershoprepository) {
+		for (FlowerShop l : flowershoprepository) {
+			if (l.getName().equals(flowershopname)){
+				Flower flower = new Flower (colour,price);
+				if (l.getFlowers()== null) {
+					ArrayList<Flower> flowers = new ArrayList<Flower>();
+					flowers.add(flower);
+					l.setFlowers(flowers);
 				}
-				
-			}				
-		}			
-	}	
+				else {
+					l.getFlowers().add(flower);
+				}//end  if-else
+				break;
+			}//end if
+			
+		}//end for
+		
+	}//end metode
+
+	
+	
+	//MÈtode per controlar l'entrada del color
+	private String inputColour() {
+		String colour="";
+		do {
+			colour = JOptionPane.showInputDialog(null,"Introdueix el color de la flor:","ENTRADA",JOptionPane.QUESTION_MESSAGE);
+			
+			if (colour.isBlank() || colour.isEmpty()) JOptionPane.showMessageDialog(null, "El color no pot esgtar buit !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
+			
+			
+		}while(colour.isBlank() || colour.isEmpty());
+		colour=colour.trim().toUpperCase();
+		return colour;
+	}// end metode
+
+	//MÈtode per introudir el color
+	
+	
+	
 }

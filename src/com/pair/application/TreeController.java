@@ -35,32 +35,49 @@ public class TreeController {
 				int height=0;
 				double price = 0;
 					
-				//do {
-				height = Integer.parseInt(JOptionPane.showInputDialog(null,"Introdueix l'al√ßada de l'arbre:","ENTRADA",JOptionPane.QUESTION_MESSAGE));
-				price = Double.parseDouble(JOptionPane.showInputDialog(null,"Introdueix el preu de l'arbre:","ENTRADA",JOptionPane.QUESTION_MESSAGE));
-						//if (height != null)  flowershopname=flowershopname.trim().toUpperCase();
-						//else {
-						//	flowershopname="";
-						//	break;
-						//}
-				//}while(height.isBlank() || height.isEmpty()); //Chequear que se introdueixi algun caracter
-				
-				for (FlowerShop l : flowershoprepository) {
-					if (l.getName().equals(flowershopname)){
-						Tree tree = new Tree (height,price);
-						
-						if (l.getTrees()== null) {
-							ArrayList<Tree> trees = new ArrayList<Tree>();
-							trees.add(tree);
-							l.setTrees(trees);
-						}
-						else {
-							l.getTrees().add(tree);
-						}
-						break;
-					}					
-				}				
+				height = inputheight();
+				price = flowershopcontroller.inputPreu();
+				saveTree(height,price,flowershopname,flowershoprepository);
 			}				
 		}			
+	}
+
+	//Metode per guardar l'arbre.
+	private void saveTree(int height, double price, String flowershopname, List<FlowerShop> flowershoprepository) {
+		for (FlowerShop l : flowershoprepository) {
+			if (l.getName().equals(flowershopname)){
+				Tree tree = new Tree (height,price);
+				
+				if (l.getTrees()== null) {
+					ArrayList<Tree> trees = new ArrayList<Tree>();
+					trees.add(tree);
+					l.setTrees(trees);
+				}
+				else {
+					l.getTrees().add(tree);
+				}
+				break;
+			}					
+		}				
+		
+	}
+
+	//MÈtode per introduir l'alÁada
+	private int inputheight() {
+		int height=-1;
+		do {
+			try {
+			
+				height=Integer.parseInt(JOptionPane.showInputDialog(null,"Introdueix l'al√ßada de l'arbre:","ENTRADA",JOptionPane.QUESTION_MESSAGE));
+				if (height <= 0 ) JOptionPane.showMessageDialog(null, "L'alÁada te ser major que 0 !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
+	
+			}catch (Exception e) {
+				
+				JOptionPane.showMessageDialog(null, "L'alÁada te que ser un numero !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
+				height=-1;
+			}
+		
+		}while(height <= 0);
+		return height;
 	}		
 }

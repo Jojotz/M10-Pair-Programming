@@ -58,10 +58,10 @@ public class FlowerSheet extends JPanel {
 			screen.setText(entrada);			
 					
 			if (entrada.equals("Crear Floristeria")) flowershopcontroller.NewFlowerShop();
-			if (entrada.equals("Afegir Arbre")) treeController.addTree();
-			if (entrada.equals("Afegir Flor")) flowerController.addFlower();
-			if (entrada.equals("Afegir Decoració"))decorationController.addDeco();
-			if (entrada.equals("Stock")) {
+			else if (entrada.equals("Afegir Arbre")) treeController.addTree();
+			else if (entrada.equals("Afegir Flor")) flowerController.addFlower();
+			else if (entrada.equals("Afegir Decoració"))decorationController.addDeco();
+			else if (entrada.equals("Stock")) {
 				String output="";
 				output = flowershopcontroller.stock();
 				System.out.println(output);

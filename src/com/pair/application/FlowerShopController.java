@@ -83,6 +83,15 @@ public class FlowerShopController {
 	
 	public String stock () {
 		
+		/***************************/
+	 
+	//	WindoOutput window = new WindoOutput();
+	//	window.frmStocks.setVisible(true);
+		 
+		 /*******************/
+		
+		
+		
 		List<FlowerShop> flowershoprepository = FlowerShopRepository.getAllFlowerShops();
 		StringBuilder output = new StringBuilder();
 		
@@ -99,9 +108,12 @@ public class FlowerShopController {
 				for (FlowerShop l : flowershoprepository) {
 					if (l.getName().equals(flowershopname)) {
 						output.append("Floristeria: " + l.getName() + "." + "\n");
-						output.append("ARBRES: " +  l.getTreesString() + "." + "\n");
-						output.append("FLORS: " + l.getFlowersString() + "." + "\n");
-						output.append("DECORACIÃ“: " + l.getDecorationString() + "." + "\n");
+						if (l.getTrees() != null) output.append("\tARBRES: " +  l.getTreesString() + "." + "\n");
+						else output.append("\tARBRES: Sense Stock.\n");
+						if (l.getFlowers() != null) output.append("\tFLORS: " + l.getFlowersString() + "." + "\n");
+						else output.append("\tFLORS: Sense Stock.\n");
+						if (l.getDecoration() != null) output.append("\tDECORACIÃ“: " + l.getDecorationString() + "." + "\n");
+						else output.append("\tDECORACIÓ: Sense Stock.\n");
 					}					
 				}
 				
@@ -112,5 +124,26 @@ public class FlowerShopController {
 			JOptionPane.showMessageDialog(null, "No hi ha cap floristeria creada !!", "Alerta", JOptionPane.ERROR_MESSAGE);
 		}				
 		return output.toString();
-	}	
+	}
+	
+	
+	
+	//Métode per introuduir els preus dels articles
+	public double inputPreu() {
+		double price=-1;
+		do {
+			try {
+				price = Double.parseDouble(JOptionPane.showInputDialog(null,"Introdueix el preu de l'arbre:","ENTRADA",JOptionPane.QUESTION_MESSAGE));
+				if (price <= 0) JOptionPane.showMessageDialog(null, "El preu te que ser major que 0 !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
+			
+			}catch(Exception e) {
+
+				JOptionPane.showMessageDialog(null, "El preu te que ser un numero!!!", "Alerta", JOptionPane.ERROR_MESSAGE);
+				price=-1;
+			}
+			
+		}while (price <= 0);
+		
+		return price;
+	}
 }
