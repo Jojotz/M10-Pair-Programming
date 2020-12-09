@@ -33,7 +33,7 @@ public class DecorationController {
 						
 
 				String material = inputMaterial();
-				double price = flowershopcontroller.inputPreu();
+				double price = flowershopcontroller.inputPreu("Introdueix el preu de la decoració:");
 				saveDecoration(material,price,flowershopname,flowershoprepository);
 			}				
 		}			
@@ -66,10 +66,7 @@ public class DecorationController {
 		do {
 			try{
 				inputmaterial = Integer.parseInt(JOptionPane.showInputDialog(null,"Introdueix el material de la decoraciÃ³ (Fusta (0) ó Plastic(1)):","ENTRADA",JOptionPane.QUESTION_MESSAGE).trim());
-				System.out.println(inputmaterial+"juan");
-				if (inputmaterial == 0)  				System.out.println("cabron");
-
-				
+					
 				if ((inputmaterial != 0 ) && (inputmaterial != 1 )) 
 					JOptionPane.showMessageDialog(null, "El material nomes pot ser Fusta (0) o Plastic(1) !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
 			}catch(Exception e){

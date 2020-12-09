@@ -1,5 +1,6 @@
 package com.pair.application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -81,21 +82,16 @@ public class FlowerShopController {
 		return flowershopname;
 	}
 	
+	
+	//MÈtode per treure l'estoc d'una floristeria en concret
 	public String stock () {
-		
-		/***************************/
-	 
-	//	WindoOutput window = new WindoOutput();
-	//	window.frmStocks.setVisible(true);
-		 
-		 /*******************/
-		
-		
-		
+			
 		List<FlowerShop> flowershoprepository = FlowerShopRepository.getAllFlowerShops();
 		StringBuilder output = new StringBuilder();
 		
-		if (flowershoprepository.size()>0) {
+		
+		
+		if (flowershoprepository.size()>0) {//comprabr si existeixen floristeries
 			
 			String flowershopname=inputFlowerShopName(); //Crida al m√®tode per introdu√Ør el nom de la floristeria
 			boolean existsflowershop=false;
@@ -108,14 +104,13 @@ public class FlowerShopController {
 				for (FlowerShop l : flowershoprepository) {
 					if (l.getName().equals(flowershopname)) {
 						output.append("Floristeria: " + l.getName() + "." + "\n");
-						if (l.getTrees() != null) output.append("\tARBRES: " +  l.getTreesString() + "." + "\n");
-						else output.append("\tARBRES: Sense Stock.\n");
-						if (l.getFlowers() != null) output.append("\tFLORS: " + l.getFlowersString() + "." + "\n");
-						else output.append("\tFLORS: Sense Stock.\n");
-						if (l.getDecoration() != null) output.append("\tDECORACI√ì: " + l.getDecorationString() + "." + "\n");
-						else output.append("\tDECORACI”: Sense Stock.\n");
-					}					
-				}
+						output.append(showTrees(l));
+						output.append(showFlowers(l));
+						output.append(showDecorations(l));
+						break;
+			
+					}//end if					
+				}//end for
 				
 			} else {				
 				JOptionPane.showMessageDialog(null, "La floristeria que demanes no existeix !!", "Alerta", JOptionPane.ERROR_MESSAGE);
@@ -123,17 +118,43 @@ public class FlowerShopController {
 		} else {			
 			JOptionPane.showMessageDialog(null, "No hi ha cap floristeria creada !!", "Alerta", JOptionPane.ERROR_MESSAGE);
 		}				
+		
 		return output.toString();
+	} //end metode stock
+	
+	
+	//Metode per treure les dades de decoraciÛ
+	private Object showDecorations(FlowerShop l) {
+		String frase="";
+		if (l.getDecoration() != null) frase = "\tDECORACI”: " + l.getDecorationString() + "." + "\n";
+		else frase = "\tDECORACI”: Sense Stock.\n";
+		return frase;
+	}
+	
+	//Metode per treure les dades de flors
+	private Object showFlowers(FlowerShop l) {
+		String frase="";
+		if (l.getFlowers() != null) frase = "\tFLORS: " + l.getFlowersString() + "." + "\n";
+		else frase = "\tFLORS: Sense Stock.\n";
+		return frase;
+	}
+	
+	//Metode per treure les dades d'arbres
+	private String showTrees(FlowerShop l) {
+		String frase="";
+		if (l.getTrees() != null) frase = "\tARBRES: " +  l.getTreesString() + "." + "\n";
+		else frase = "\tARBRES: Sense Stock.\n";
+		return frase;
 	}
 	
 	
 	
 	//MÈtode per introuduir els preus dels articles
-	public double inputPreu() {
+	public double inputPreu(String frase) {
 		double price=-1;
 		do {
 			try {
-				price = Double.parseDouble(JOptionPane.showInputDialog(null,"Introdueix el preu de l'arbre:","ENTRADA",JOptionPane.QUESTION_MESSAGE));
+				price = Double.parseDouble(JOptionPane.showInputDialog(null,frase,"ENTRADA",JOptionPane.QUESTION_MESSAGE));
 				if (price <= 0) JOptionPane.showMessageDialog(null, "El preu te que ser major que 0 !!!", "Alerta", JOptionPane.ERROR_MESSAGE);
 			
 			}catch(Exception e) {
@@ -145,5 +166,14 @@ public class FlowerShopController {
 		}while (price <= 0);
 		
 		return price;
-	}
+	}//end metode inputPreu
+
+	
+	//MÈtode per veure tot l'estock gloabal
+	public void stockGlobal() {
+
+		WindoOutput window = new WindoOutput();
+		window.frmStocks.setVisible(true);
+		
+	}//end metode stockGlobal
 }

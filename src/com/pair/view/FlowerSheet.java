@@ -38,6 +38,7 @@ public class FlowerSheet extends JPanel {
 		ponerBoton("Afegir Flor", insertar);
 		ponerBoton("Afegir Decoració", insertar);
 		ponerBoton("Stock", insertar);
+		ponerBoton("Stock Global", insertar);
 								
 		add(mySheet2, BorderLayout.SOUTH);
 	}
@@ -61,11 +62,8 @@ public class FlowerSheet extends JPanel {
 			else if (entrada.equals("Afegir Arbre")) treeController.addTree();
 			else if (entrada.equals("Afegir Flor")) flowerController.addFlower();
 			else if (entrada.equals("Afegir Decoració"))decorationController.addDeco();
-			else if (entrada.equals("Stock")) {
-				String output="";
-				output = flowershopcontroller.stock();
-				System.out.println(output);
-			}
+			else if (entrada.equals("Stock")) System.out.println(flowershopcontroller.stock());
+			else if (entrada.equals("Stock Global")) flowershopcontroller.stockGlobal();
 		}	
 	}
 }

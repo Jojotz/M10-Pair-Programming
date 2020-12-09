@@ -36,7 +36,7 @@ public class TreeController {
 				double price = 0;
 					
 				height = inputheight();
-				price = flowershopcontroller.inputPreu();
+				price = flowershopcontroller.inputPreu("Introdueix el preu de l'arbre:");
 				saveTree(height,price,flowershopname,flowershoprepository);
 			}				
 		}			

@@ -32,7 +32,7 @@ public class FlowerController {
 			else {
 								
 				String colour = inputColour();
-				double price = flowershopcontroller.inputPreu();
+				double price = flowershopcontroller.inputPreu("Introdueix el preu de la flor:");
 				saveFlower(colour, price, flowershopname,flowershoprepository);
 				
 			}//end 2on if-else				
